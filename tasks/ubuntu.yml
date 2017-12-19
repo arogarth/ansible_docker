@@ -1,0 +1,29 @@
+---
+
+- name: Install required dependencies
+  apt: name="{{item}}" state=present
+  with_items:
+  - apt-transport-https
+  - ca-certificates
+  - curl
+  - software-properties-common
+
+- name: Add Docker gpg key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    id: 0EBFCD88
+- name: Add docker repo
+  apt_repository:
+    repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ansible_distribution_release}} stable"
+    update_cache: yes
+
+- name: Install Docker
+  apt: name="docker-ce"
+
+
+- name: Install docker config
+  template: src=etc/default/docker dest=/etc/default/docker
+  notify: restart dockerd
+
+- name: Make sure, docker is runniung
+  service: name=docker state=started

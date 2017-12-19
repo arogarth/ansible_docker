@@ -1,0 +1,3 @@
+---
+# vars file for docker
+defautl_data_root: "/var/lib/docker/"

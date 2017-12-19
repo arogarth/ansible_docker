@@ -1,0 +1,6 @@
+---
+# defaults file for docker
+
+#data_root: ""
+
+docker_opts: []
